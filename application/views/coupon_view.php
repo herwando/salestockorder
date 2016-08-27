@@ -13,8 +13,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div id="container" width="50px">
 			<center><h1>Transaction Order</h1></center>
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="<?php echo site_url('product'); ?>">Products</a></li>
-				<li><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
+				<li><a href="<?php echo site_url('product'); ?>">Products</a></li>
+				<li class="active"><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
 				<li><a href="#">My Order</a></li>
 				<li><a href="#">My Transaction</a></li>
 			</ul>
@@ -23,23 +23,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<center>
 		<table>
 		<?php 
-		if($product) {
-			foreach($product as $p) {
-				if(($p{'Id'} % 2) == 1) {
-					echo "<tr>";
+		if($coupon) {
+			foreach($coupon as $c) {
+				echo "<tr>";
+				echo "<td><img src='". base_url() ."images/".$c{'Picture'}."' height='150' width='300' /></td>";
+				echo "<td><b>".$c{'Name'}."</b><br>";
+				echo "Masa berlaku : ".$c{'Startdate'}." sampai ".$c{'Finishdate'}."<br>";
+				if($c{'Nominal'} > 0) {
+					echo "Nominal : Rp. ".$c{'Nominal'}.",- <br>";
 				}
-				echo "<td><img src='". base_url() ."images/".$p{'Picture'}."' height='150' width='150' /></td>";
-				echo "<td><b>".$p{'Name'}."</b><br>";
-				echo "Price : Rp. ".$p{'Price'}.",- <br>";
-				echo "Rating : <img src='". base_url() ."images/".$p{'Rating'}."' height='25' width='120' /><br>";
-				echo "Stock : ".$p{'Stock'}."<br>";
-				if($p{'Stock'} > 0) {
-					echo "<button type='button'>Order</button><br>";
+				else {
+					echo "Discount : ".$c{'Discount'}."% <br>";
 				}
+				echo "Total : ".$c{'Total'}."<br>";
 				echo "</td>";
-				if(($p{'Id'} % 2) == 0) {
-					echo "</tr>";
-				}
+				echo "</tr>";
 			}
 		}
 		?>
