@@ -1,89 +1,56 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
-
-	<style type="text/css">
-
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
-
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
-	}
-
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
-
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
-
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
-
-	#body {
-		margin: 0 15px 0 15px;
-	}
-
-	p.footer {
-		text-align: right;
-		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
-		line-height: 32px;
-		padding: 0 10px 0 10px;
-		margin: 20px 0 0 0;
-	}
-
-	#container {
-		margin: 10px;
-		border: 1px solid #D0D0D0;
-		box-shadow: 0 0 8px #D0D0D0;
-	}
-	</style>
-</head>
-<body>
-
-<div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
-
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
-	</div>
-
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
-</div>
-
-</body>
+<html lang="en" >
+	<head>
+		<meta charset="utf-8">
+		<title>Sale Stock</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div id="container" width="50px">
+			<center><h1>Transaction Order</h1></center>
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="<?php echo site_url('product'); ?>">Products</a></li>
+				<li><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
+				<li><a href="#">My Order</a></li>
+				<li><a href="#">My Transaction</a></li>
+			</ul>
+		</div>
+		<button type='button' style="float: right;">Admin</button>
+		<center>
+		<table>
+		<?php 
+		if($product) {
+			foreach($product as $p) {
+				if(($p{'Id'} % 2) == 1) {
+					echo "<tr>";
+				}
+				echo "<td><img src='". base_url() ."images/".$p{'Picture'}."' height='150' width='150' /></td>";
+				echo "<td><b>".$p{'Name'}."</b><br>";
+				echo "Price : Rp. ".$p{'Price'}.",- <br>";
+				echo "Rating : <img src='". base_url() ."images/".$p{'Rating'}."' height='25' width='120' /><br>";
+				echo "Stock : ".$p{'Stock'}."<br>";
+				if($p{'Stock'} > 0) {
+					echo "<button type='button' value='".$p{'Id'}."' onclick='deleteProduct(this.value)'>Order</button><br>";
+				}
+				echo "</td>";
+				if(($p{'Id'} % 2) == 0) {
+					echo "</tr>";
+				}
+			}
+		}
+		?>
+		</table>
+		</center>
+	</body>
 </html>
+
+<script type="text/javascript">
+	function deleteProduct(value)
+	{
+		window.location.href = "<?php echo base_url();?>index.php/product/order/"+value;
+	}
+</script>
