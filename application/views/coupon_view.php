@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<ul class="nav nav-tabs">
 				<li><a href="<?php echo site_url('product'); ?>">Products</a></li>
 				<li class="active"><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
-				<li><a href="#">My Order</a></li>
+				<li><a href="<?php echo site_url('order'); ?>">My Order</a></li>
 				<li><a href="#">My Transaction</a></li>
 			</ul>
 		</div>

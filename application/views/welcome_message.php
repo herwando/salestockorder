@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="<?php echo site_url('product'); ?>">Products</a></li>
 				<li><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
-				<li><a href="#">My Order</a></li>
+				<li><a href="<?php echo site_url('order'); ?>">My Order</a></li>
 				<li><a href="#">My Transaction</a></li>
 			</ul>
 		</div>
@@ -34,6 +34,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "Rating : <img src='". base_url() ."images/".$p{'Rating'}."' height='25' width='120' /><br>";
 				echo "Stock : ".$p{'Stock'}."<br>";
 				if($p{'Stock'} > 0) {
+					echo "<select id='totalorder'>
+						<option value='1' selected='selected'>1</option>";
+					if($p{'Stock'} > 1) {
+						for($x = 2; $x <= $p{'Stock'}; $x++) {
+							echo "<option value='".$x."'>".$x."</option>";
+						}
+					}	
+					echo "</select>
+					";
 					echo "<button type='button' value='".$p{'Id'}."' onclick='deleteProduct(this.value)'>Order</button><br>";
 				}
 				echo "</td>";
@@ -51,6 +60,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript">
 	function deleteProduct(value)
 	{
-		window.location.href = "<?php echo base_url();?>index.php/product/order/"+value;
+		var e = document.getElementById("totalorder");
+		var total = e.options[e.selectedIndex].value;
+		window.location.href = "<?php echo base_url();?>index.php/product/order/"+value+"/"+total;
 	}
 </script>

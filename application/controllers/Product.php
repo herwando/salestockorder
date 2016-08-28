@@ -11,10 +11,13 @@ class Product extends CI_Controller {
 		$this->load->view('welcome_message', $data);
 	}
 	
-	public function order($id) {
+	public function order($id, $total) {
 		$this->load->helper('url');
 		$this->load->model('productmodel');
-		$this->productmodel->deleteProduct($id);
+		$data = $this->productmodel->getProductId($id);
+		$this->productmodel->deleteProduct($id, $total);
+		$this->load->model('ordermodel');
+		$this->ordermodel->addOrder($data->Name, $data->Picture, $total, $data->Price);
 		$this->index();
 	}
 }
