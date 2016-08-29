@@ -15,9 +15,8 @@ class Product extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('productmodel');
 		$data = $this->productmodel->getProductId($id);
-		$this->productmodel->deleteProduct($id, $total);
 		$this->load->model('ordermodel');
-		$this->ordermodel->addOrder($data->Name, $data->Picture, $total, $data->Price);
+		$this->ordermodel->addOrder($data->Name, $data->Picture, $total, $data->Price, $data->Id);
 		$this->index();
 	}
 }

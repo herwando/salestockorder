@@ -14,13 +14,14 @@ class Ordermodel extends CI_Model {
 		return $data->result_array();
 	}
 	
-	public function addOrder($name, $picture, $total, $price)
+	public function addOrder($name, $picture, $total, $price, $pid)
 	{
 		$data = array(
 			'Name' => $name,
 			'Picture' => $picture,
 			'Total' => $total,
-			'Price' => $price*$total
+			'Price' => $price*$total,
+			'Pid' => $pid
 		);
 		$this->db->insert('ordering', $data);
 	}
@@ -29,6 +30,7 @@ class Ordermodel extends CI_Model {
 		$this->db->where('Id',$id);
 		$this->db->delete('ordering');
 	}
+	
 	
 	public function getPid($id) {
 		$data = $this->db->query('select Pid,Total from ordering where Id='.$id);

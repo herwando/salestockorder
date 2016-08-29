@@ -16,10 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<li><a href="<?php echo site_url('product'); ?>">Products</a></li>
 				<li><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
 				<li class="active"><a href="<?php echo site_url('order'); ?>">My Order</a></li>
-				<li><a href="#">My Transaction</a></li>
+				<li><a href="<?php echo site_url('transaction'); ?>">My Transaction</a></li>
 			</ul>
 		</div>
-		<button type='button' style="float: right;">Admin</button>
+		<button type='button' style="float: right;" onclick="admin()">Admin</button>
 		<center>
 		<table border="1" style="text-align: center;">
 		<tr>
@@ -31,8 +31,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>Operation</th>
 		</tr>
 		<?php 
+		$ordercus = "";
 		if($order) {
 			foreach($order as $o) {
+				$ordercus = $ordercus."".$o{'Name'}."(".$o{'Total'}.")<br>";
 				echo "<tr>";
 				echo "<td><b>".$o{'Id'}."</b><br>";
 				echo "<td><img src='". base_url() ."images/".$o{'Picture'}."' height='150' width='150' /></td>";
@@ -43,12 +45,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "</tr>";
 			}
 		}
+		echo "<button id='ordercus' value='".$ordercus."' style='display:none;'></button>";
 		?>
 		</table>
 		<center>
-			<h4>Total : Rp. 
-			<?php if($price) {
-				$total = 0;
+			<h5>Total Order : Rp. 
+			<?php 
+			$total = 0;
+			if($price) {
 				foreach($price as $p) {
 					$total = $total + $p{'Price'};
 				}
@@ -57,8 +61,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			else {
 				echo "0,-";
 			}
+			
+			echo "</h5><br>";
+			echo "<h5>Apply Coupon:</h5>";
+			$temp = 0;
+			 if($coupon) {
+				if($coupon->Nominal > 0) {
+					$temp = $coupon->Nominal;
+				}
+				else {
+					$temp = ($coupon->Discount * $total)/100;
+				}
+				echo "<table><tr><td><img src='". base_url() ."images/".$coupon->Picture."' height='100' width='150' /></td><td>".$coupon->Name."</td><td> Potongan : - Rp. ".$temp.",- </td>
+				<td><button value='".$coupon->Id."' onclick='deleteCoupon(this.value)'>Delete</button></td></tr><table>";
+			}
+			else {
+				echo "<a href=".site_url('coupon').">Pilih Coupon</a>";
+			}
+			$bayar = $total-$temp;
+			if($bayar < 0) {
+				$bayar = 0;
+			}
+			echo "<button id='totalbayar' value='".$bayar."' style='display:none;'></button>";
+			echo "<h4>Total Pembayaran :  Rp. ".$bayar.",- </h4>";	
+			if($order) {
+				if($bank) {
+					echo "<h5>Pembayaran via Transfer Bank : ";
+					echo "<select id='totalorder'>";
+					foreach($bank as $b) {
+						echo "<option value='".$b{'Name'}."'>".$b{'Name'}."</option>";
+					}
+					echo "</select></h5>";
+				}
+				echo "<button onclick='orderPart2()'>Order</button>";
+			}
 			?>
-			</h4>
 		</center>
 		</center>
 	</body>
@@ -71,5 +108,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	function deleteOrder(value)
 	{
 		window.location.href = "<?php echo base_url();?>index.php/order/deleteOrder/"+value;
+	}
+	
+	function deleteCoupon(value)
+	{
+		window.location.href = "<?php echo base_url();?>index.php/order/deleteCoupon/"+value;
+	}
+	
+	function orderPart2()
+	{
+		var total = document.getElementById("totalbayar").value;
+		var ordercus = document.getElementById("ordercus").value;
+		window.location.href = "<?php echo base_url();?>index.php/order/orderPart2/"+total+"/"+ordercus;
+	}
+	
+	function admin()
+	{
+		window.location.href = "<?php echo base_url();?>index.php/admin/";
 	}
 </script>

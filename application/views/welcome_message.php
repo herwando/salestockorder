@@ -16,10 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<li class="active"><a href="<?php echo site_url('product'); ?>">Products</a></li>
 				<li><a href="<?php echo site_url('coupon'); ?>">My Coupon</a></li>
 				<li><a href="<?php echo site_url('order'); ?>">My Order</a></li>
-				<li><a href="#">My Transaction</a></li>
+				<li><a href="<?php echo site_url('transaction'); ?>">My Transaction</a></li>
 			</ul>
 		</div>
-		<button type='button' style="float: right;">Admin</button>
+		<button type='button' style="float: right;" onclick="admin()">Admin</button>
 		<center>
 		<table>
 		<?php 
@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}	
 					echo "</select>
 					";
-					echo "<button type='button' value='".$p{'Id'}."' onclick='deleteProduct(this.value)'>Order</button><br>";
+					echo "<button type='button' value='".$p{'Id'}."' onclick='order(this.value)'>Order</button><br>";
 				}
 				echo "</td>";
 				if(($p{'Id'} % 2) == 0) {
@@ -58,10 +58,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 
 <script type="text/javascript">
-	function deleteProduct(value)
+	function order(value)
 	{
 		var e = document.getElementById("totalorder");
 		var total = e.options[e.selectedIndex].value;
 		window.location.href = "<?php echo base_url();?>index.php/product/order/"+value+"/"+total;
+	}
+	
+	function admin()
+	{
+		window.location.href = "<?php echo base_url();?>index.php/admin/";
 	}
 </script>
