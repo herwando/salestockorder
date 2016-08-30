@@ -35,6 +35,12 @@ Id	Name
 2	Tiki
 3	Pos
 
+Ordering
+Id	Name	Pid		Picture		Total		Price 
+
+Transaction
+Id	Name	Phone	Email	Address 	OrderCus	Total	Pembayaran		Shipping	Status
+
 Requirement yang diminta:
 
 1. Order transaction involves the following actors: customer and admin.
