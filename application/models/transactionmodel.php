@@ -18,7 +18,7 @@ class Transactionmodel extends CI_Model {
 			'Address' => $address,
 			'Total' => $total,
 			'OrderCus' => $ordercus,
-			'Resi' => 0,
+			'Pembayaran' => 0,
 			'Status' => 0
 		);
 		$this->db->insert('transaction', $data);
