@@ -11,11 +11,11 @@ class Transaction extends CI_Controller {
 		$this->load->view('transaction_view', $data);
 	}
 	
-	public function updateResi($id, $resi)
+	public function updatePembayaran($id, $pembayaran)
 	{
 		$this->load->helper('url');
 		$this->load->model('transactionmodel');
-		$this->transactionmodel->updateResi($id, $resi);
+		$this->transactionmodel->updatePembayaran($id, $pembayaran);
 		$this->index();
 	}
 	

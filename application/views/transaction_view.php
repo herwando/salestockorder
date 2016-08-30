@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>Adress</th>
 			<th>Order</th>
 			<th>Total</th>
-			<th>Resi</th>
+			<th>Konfirmasi Pembayaran</th>
 			<th>Shipping</th>
 			<th>Status</th>
 		</tr>
@@ -48,11 +48,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo "<td>".$t{'Address'}."</td>";
 				echo "<td>".$temp1."</td>";
 				echo "<td>".$t{'Total'}."</td>";
-				if($t{'Resi'}) {
-					echo "<td>".$t{'Resi'}."</td>";
+				if($t{'Pembayaran'}) {
+					echo "<td>".$t{'Pembayaran'}."</td>";
 				}
 				else {
-					echo "<td>Masukkan resi:<br><input type='text' id='resi' required><br><button type='button' value='".$t{'Id'}."' onclick='resi(this.value)'>Submit</button></td>";
+					echo "<td>Nomor rekening Anda:<br><input type='text' id='pembayaran' required><br><button type='button' value='".$t{'Id'}."' onclick='pembayaran(this.value)'>Submit</button></td>";
 				}
 				if($t{'Status'} >= 4) {
 					echo "<td>".$t{'Shipping'}."</td>";
@@ -88,10 +88,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 
 <script type="text/javascript">
-	function resi(value)
+	function pembayaran(value)
 	{
-		var e = document.getElementById("resi").value;
-		window.location.href = "<?php echo base_url();?>index.php/transaction/updateResi/"+value+"/"+e;
+		var e = document.getElementById("pembayaran").value;
+		window.location.href = "<?php echo base_url();?>index.php/transaction/updatePembayaran/"+value+"/"+e;
 	}
 	
 	function admin()

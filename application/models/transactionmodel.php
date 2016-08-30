@@ -24,10 +24,10 @@ class Transactionmodel extends CI_Model {
 		$this->db->insert('transaction', $data);
 	}
 	
-	public function updateResi($id, $resi)
+	public function updatePembayaran($id, $pembayaran)
 	{
 		$data1 = array(
-			'Resi' => $resi,
+			'Pembayaran' => $pembayaran,
 			'Status' => 1
 		);
 		$this->db->where('Id', $id);

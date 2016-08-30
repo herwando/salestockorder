@@ -28,14 +28,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>Adress</th>
 			<th>Order</th>
 			<th>Total</th>
-			<th>Resi</th>
+			<th>Konfirmasi Pembayaran</th>
 			<th>Shipping</th>
 			<th>Status</th>
 		</tr>
 		<?php 
 		if($admin) {
 			foreach($admin as $t) {
-				if($t{'Resi'}) {
+				if($t{'Pembayaran'}) {
 					$temp = str_replace("%3C","<", $t{'OrderCus'});
 					$temp1 = str_replace("%3E",">", $temp);
 					echo "<tr>";
@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo "<td>".$t{'Address'}."</td>";
 					echo "<td>".$temp1."</td>";
 					echo "<td>".$t{'Total'}."</td>";
-					echo "<td>".$t{'Resi'}."</td>";
+					echo "<td>".$t{'Pembayaran'}."</td>";
 					if($t{'Status'} == 2) {
 						if($shipping) {
 							echo "<td><select id='shipping'>";
@@ -92,12 +92,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 
 <script type="text/javascript">
-	function resi(value)
-	{
-		var e = document.getElementById("resi").value;
-		window.location.href = "<?php echo base_url();?>index.php/transaction/updateResi/"+value+"/"+e;
-	}
-	
 	function customer()
 	{
 		window.location.href = "<?php echo base_url();?>index.php/product/";

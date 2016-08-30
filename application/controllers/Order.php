@@ -43,18 +43,26 @@ class Order extends CI_Controller {
 		$this->load->model('ordermodel');
 		$this->load->model('productmodel');
 		$this->load->model('transactionmodel');
-		$id = $this->couponmodel->getStatusId();
-		if($id) {
-			$this->couponmodel->deleteTotalCoupon($id);
-			$this->couponmodel->deleteStatus($id);
+		$coupon = $this->couponmodel->getCouponId();
+		if(time() >=  strtotime($coupon->Startdate) && time() <=  strtotime($coupon->Finishdate)) {
+			$id = $this->couponmodel->getStatusId();
+			if($id) {
+				$this->couponmodel->deleteTotalCoupon($id);
+				$this->couponmodel->deleteStatus($id);
+			}
+			$data = $this->ordermodel->getOrder();
+			foreach($data as $d) {
+				$data1 = $this->ordermodel->getPid($d{'Id'});
+				$this->ordermodel->deleteOrder($d{'Id'});
+				$this->productmodel->deleteProduct($data1->Pid, $data1->Total);
+			}
+			$this->transactionmodel->addTransaction($name, $phone, $email, $address, $total, $ordercus);
 		}
-		$data = $this->ordermodel->getOrder();
-		foreach($data as $d) {
-			$data1 = $this->ordermodel->getPid($d{'Id'});
-			$this->ordermodel->deleteOrder($d{'Id'});
-			$this->productmodel->deleteProduct($data1->Pid, $data1->Total);
+		else {
+			echo '<script language="javascript">';
+			echo 'alert("Masa berlaku kupon sudah habis")';
+			echo '</script>';
 		}
-		$this->transactionmodel->addTransaction($name, $phone, $email, $address, $total, $ordercus);
 		$this->index();
 	}
 }

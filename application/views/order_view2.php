@@ -22,12 +22,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<button id="totalbayar" value="<?php echo $total; ?>" style="display:none;"></button>
 		<button id="ordercus" value="<?php echo $ordercus; ?>" style="display:none;"></button>
 		<button type='button' style="float: right;">Admin</button>
-		<form  method="post">
+		<form  method="post" action="javascript:myFunction()">
 			Name: <input type="text" id="name" required><br>
 			Phone: <input type="tel" id="phone" required><br>
 			E-mail: <input type="email" id="email" required><br>
 			Address: <input type="text" id="address" required><br>
-			<button type="button" value="" onclick="myFunction()">Submit</button>
+			<input name="Submit"  type="submit">
 		</form>
 	</body>
 </html>
